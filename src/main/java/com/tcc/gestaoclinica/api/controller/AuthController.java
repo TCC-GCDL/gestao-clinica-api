@@ -1,8 +1,8 @@
 package com.tcc.gestaoclinica.api.controller;
 
-import com.tcc.gestaoclinica.api.dto.CreateUserDto;
-import com.tcc.gestaoclinica.api.dto.LoginUserDto;
-import com.tcc.gestaoclinica.api.dto.RecoveryJwtTokenDto;
+import com.tcc.gestaoclinica.api.dto.request.CreateUserDto;
+import com.tcc.gestaoclinica.api.dto.request.LoginUserDto;
+import com.tcc.gestaoclinica.api.dto.response.RecoveryJwtTokenDto;
 import com.tcc.gestaoclinica.domain.repositories.UserRepository;
 import com.tcc.gestaoclinica.domain.services.UserService;
 import jakarta.validation.Valid;

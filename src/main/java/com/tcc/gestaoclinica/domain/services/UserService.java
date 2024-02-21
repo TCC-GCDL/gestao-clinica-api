@@ -1,9 +1,9 @@
 package com.tcc.gestaoclinica.domain.services;
 
 import com.tcc.gestaoclinica.api.dto.AuthUserDto;
-import com.tcc.gestaoclinica.api.dto.CreateUserDto;
-import com.tcc.gestaoclinica.api.dto.LoginUserDto;
-import com.tcc.gestaoclinica.api.dto.RecoveryJwtTokenDto;
+import com.tcc.gestaoclinica.api.dto.request.CreateUserDto;
+import com.tcc.gestaoclinica.api.dto.request.LoginUserDto;
+import com.tcc.gestaoclinica.api.dto.response.RecoveryJwtTokenDto;
 import com.tcc.gestaoclinica.core.security.JwtTokenService;
 import com.tcc.gestaoclinica.core.security.SecurityConfiguration;
 import com.tcc.gestaoclinica.core.security.UserDetailsImpl;

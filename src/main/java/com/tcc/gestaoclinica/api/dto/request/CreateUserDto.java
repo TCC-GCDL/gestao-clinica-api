@@ -1,4 +1,4 @@
-package com.tcc.gestaoclinica.api.dto;
+package com.tcc.gestaoclinica.api.dto.request;
 
 import com.tcc.gestaoclinica.domain.models.RoleName;
 import com.tcc.gestaoclinica.domain.models.Status;

@@ -1,7 +1,7 @@
 package com.tcc.gestaoclinica.api.controller;
 
-import com.tcc.gestaoclinica.api.dto.CreateUserDto;
-import com.tcc.gestaoclinica.api.dto.UserDto;
+import com.tcc.gestaoclinica.api.dto.request.CreateUserDto;
+import com.tcc.gestaoclinica.api.dto.response.UserDto;
 import com.tcc.gestaoclinica.domain.models.User;
 import com.tcc.gestaoclinica.domain.repositories.UserRepository;
 import com.tcc.gestaoclinica.domain.services.UserService;

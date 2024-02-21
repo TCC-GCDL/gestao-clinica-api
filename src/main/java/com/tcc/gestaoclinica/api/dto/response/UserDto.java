@@ -1,14 +1,14 @@
-package com.tcc.gestaoclinica.api.dto;
+package com.tcc.gestaoclinica.api.dto.response;
 
-import com.tcc.gestaoclinica.domain.models.CategoryCNH;
-import com.tcc.gestaoclinica.domain.models.MaritalStatus;
+import com.tcc.gestaoclinica.domain.models.RoleName;
+import com.tcc.gestaoclinica.domain.models.Status;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.time.LocalDate;
 
 @Data
-public class PacienteDto {
+public class UserDto {
 
     @NotBlank
     private Long id;
@@ -53,15 +53,9 @@ public class PacienteDto {
     @NotBlank
     private String email;
 
-    @NotBlank
-    private String renach;
+    private RoleName role;
 
-    @NotBlank
-    private CategoryCNH categoryCNH;
+    private Status status;
 
-    @NotBlank
-    private MaritalStatus maritalStatus;
-
-
-
+    private String password;
 }
