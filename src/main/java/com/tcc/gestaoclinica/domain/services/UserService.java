@@ -52,7 +52,7 @@ public class UserService {
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
         User user = userRepository.findByEmail(userDetails.getUsername()).orElseThrow();
-        AuthUserDto authUser = new AuthUserDto(user.getId(), user.getEmail(), user.getNome());
+        AuthUserDto authUser = new AuthUserDto(user.getId(), user.getEmail(), user.getFirstName());
 
         // Gera um token JWT para o usuário autenticado
         return new RecoveryJwtTokenDto(authUser, jwtTokenService.generateToken(userDetails));
@@ -64,7 +64,7 @@ public class UserService {
             throw new EmailAlreadyExistsException();
         }
 
-        if(userRepository.existsByTelefone(createUserDto.telefone())) {
+        if(userRepository.existsByPhone(createUserDto.phone())) {
             throw new TelefoneExistsException();
         }
 
@@ -73,13 +73,13 @@ public class UserService {
         }
 
         Address address = Address.builder()
-                .cep(createUserDto.cep())
-                .rua(createUserDto.rua())
-                .cidade(createUserDto.cidade())
-                .bairro(createUserDto.bairro())
-                .estado(createUserDto.estado())
-                .complemento(createUserDto.complemento())
-                .numero(createUserDto.numero()).build();
+                .zipCode(createUserDto.zipCode())
+                .street(createUserDto.street())
+                .city(createUserDto.city())
+                .neighborhood(createUserDto.neighborhood())
+                .state(createUserDto.state())
+                .complement(createUserDto.complement())
+                .number(createUserDto.number()).build();
 
         User user = new User();
         user.setAddress(address);
@@ -87,17 +87,17 @@ public class UserService {
 
         List<Role> roles = new ArrayList<>();
         Role role = new Role();
-        role.setNome(createUserDto.role());
+        role.setName(createUserDto.role());
         roles.add(role);
 
         user.setRoles(roles);
-        user.setDataDeNascimento(createUserDto.dataDeNascimento());
-        user.setNome(createUserDto.nome());
+        user.setDateOfBirth(createUserDto.dateOfBirth());
+        user.setFirstName(createUserDto.firstName());
         user.setPassword(securityConfiguration.passwordEncoder().encode(createUserDto.password()));
-        user.setTelefone(createUserDto.telefone());
-        user.setSobrenome(createUserDto.sobrenome());
+        user.setPhone(createUserDto.phone());
+        user.setLastName(createUserDto.lastName());
         user.setCpf(createUserDto.cpf());
-        user.setGenero(createUserDto.genero());
+        user.setGender(createUserDto.gender());
         user.setStatus(Status.ATIVO);
 
         userRepository.save(user);
@@ -112,7 +112,7 @@ public class UserService {
             throw new EmailAlreadyExistsException();
         }
 
-        if (!user.getTelefone().equals(updateUserDto.telefone()) && userRepository.existsByTelefone(updateUserDto.telefone())) {
+        if (!user.getPhone().equals(updateUserDto.phone()) && userRepository.existsByPhone(updateUserDto.phone())) {
             throw new TelefoneExistsException();
         }
 
@@ -121,19 +121,19 @@ public class UserService {
         }
 
 
-        user.setNome(updateUserDto.nome());
-        user.setSobrenome(updateUserDto.sobrenome());
-        user.setGenero(updateUserDto.genero());
-        user.setDataDeNascimento(updateUserDto.dataDeNascimento());
+        user.setFirstName(updateUserDto.firstName());
+        user.setLastName(updateUserDto.lastName());
+        user.setGender(updateUserDto.gender());
+        user.setDateOfBirth(updateUserDto.dateOfBirth());
 
         Address address = user.getAddress();
-        address.setCep(updateUserDto.cep());
-        address.setRua(updateUserDto.rua());
-        address.setCidade(updateUserDto.cidade());
-        address.setBairro(updateUserDto.bairro());
-        address.setEstado(updateUserDto.estado());
-        address.setComplemento(updateUserDto.complemento());
-        address.setNumero(updateUserDto.numero());
+        address.setZipCode(updateUserDto.zipCode());
+        address.setStreet(updateUserDto.street());
+        address.setCity(updateUserDto.city());
+        address.setNeighborhood(updateUserDto.neighborhood());
+        address.setState(updateUserDto.state());
+        address.setComplement(updateUserDto.complement());
+        address.setNumber(updateUserDto.number());
         user.setAddress(address);
 
 
@@ -145,8 +145,8 @@ public class UserService {
             user.setCpf(updateUserDto.cpf());
         }
 
-        if (!user.getTelefone().equals(updateUserDto.telefone())) {
-            user.setTelefone(updateUserDto.telefone());
+        if (!user.getPhone().equals(updateUserDto.phone())) {
+            user.setPhone(updateUserDto.phone());
         }
 
         if (!securityConfiguration.passwordEncoder().matches(updateUserDto.password(), user.getPassword())) {

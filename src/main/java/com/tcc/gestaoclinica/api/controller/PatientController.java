@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/patient")
 @RestController
-public class PacienteController {
+public class PatientController {
 
 
     @PostMapping

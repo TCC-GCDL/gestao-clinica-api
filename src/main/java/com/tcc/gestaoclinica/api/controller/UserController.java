@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-public class UsuarioController {
+public class UserController {
 
     @Autowired
     private UserService userService;
@@ -64,23 +64,23 @@ public class UsuarioController {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setEmail(user.getEmail());
-        userDto.setNome(user.getNome());
-        userDto.setSobrenome(user.getSobrenome());
-        userDto.setTelefone(user.getTelefone());
+        userDto.setFirstName(user.getFirstName());
+        userDto.setLastName(user.getLastName());
+        userDto.setPhone(user.getPhone());
         userDto.setCpf(user.getCpf());
-        userDto.setGenero(user.getGenero());
-        userDto.setDataDeNascimento(user.getDataDeNascimento());
+        userDto.setGender(user.getGender());
+        userDto.setDateOfBirth(user.getDateOfBirth());
         if (user.getAddress() != null) {
-            userDto.setRua(user.getAddress().getRua());
-            userDto.setNumero(user.getAddress().getNumero());
-            userDto.setComplemento(user.getAddress().getComplemento());
-            userDto.setBairro(user.getAddress().getBairro());
-            userDto.setCidade(user.getAddress().getCidade());
-            userDto.setEstado(user.getAddress().getEstado());
-            userDto.setCep(user.getAddress().getCep());
+            userDto.setStreet(user.getAddress().getStreet());
+            userDto.setNumber(user.getAddress().getNumber());
+            userDto.setComplement(user.getAddress().getComplement());
+            userDto.setNeighborhood(user.getAddress().getNeighborhood());
+            userDto.setCity(user.getAddress().getCity());
+            userDto.setState(user.getAddress().getState());
+            userDto.setZipCode(user.getAddress().getZipCode());
         }
 
-        userDto.setRole(user.getRoles().stream().toList().get(0).getNome());
+        userDto.setRole(user.getRoles().stream().toList().get(0).getName());
         userDto.setStatus(user.getStatus());
         userDto.setPassword(user.getPassword());
 

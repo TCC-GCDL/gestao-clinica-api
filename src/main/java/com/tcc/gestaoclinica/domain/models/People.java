@@ -15,13 +15,13 @@ public class People {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String nome;
-    private String sobrenome;
-    private String telefone;
+    private String firstName;
+    private String lastName;
+    private String phone;
     private String cpf;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="endereco_id")
+    @JoinColumn(name="address_id")
     private Address address;
-    private String genero;
-    private LocalDate dataDeNascimento;
+    private String gender;
+    private LocalDate dateOfBirth;
 }

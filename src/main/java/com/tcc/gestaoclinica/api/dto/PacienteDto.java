@@ -14,41 +14,41 @@ public class PacienteDto {
     private Long id;
 
     @NotBlank
-    private String nome;
+    private String firstName;
 
     @NotBlank
-    private String sobrenome;
+    private String lastName;
 
     @NotBlank
-    private String telefone;
+    private String phone;
 
     @NotBlank
-    private String cidade;
+    private String city;
 
     @NotBlank
     private String cpf;
 
     @NotBlank
-    private String genero;
+    private String gender;
 
-    private LocalDate dataDeNascimento;
-
-    @NotBlank
-    private String cep;
+    private LocalDate dateOfBirth;
 
     @NotBlank
-    private String rua;
+    private String zipCode;
 
     @NotBlank
-    private String numero;
-
-    private String complemento;
+    private String street;
 
     @NotBlank
-    private String bairro;
+    private String number;
+
+    private String complement;
 
     @NotBlank
-    private String estado;
+    private String neighborhood;
+
+    @NotBlank
+    private String state;
 
     @NotBlank
     private String email;
@@ -61,9 +61,6 @@ public class PacienteDto {
 
     @NotBlank
     private MaritalStatus maritalStatus;
-
-
-
 
 
 

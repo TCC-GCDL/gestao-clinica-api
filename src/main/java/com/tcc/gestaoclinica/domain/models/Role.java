@@ -18,7 +18,7 @@ public class Role {
     private Long id;
 
     @Enumerated(EnumType.STRING) // Indica que o enum será persistido como uma string
-    private RoleName nome;
+    private RoleName name;
 
     @ManyToMany(mappedBy = "roles")
     private List<User> users;

@@ -7,8 +7,8 @@ import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 public record CreateUserDto(
-        @NotBlank String nome, String sobrenome, String telefone, String cidade, String cpf,
-        String genero, LocalDate dataDeNascimento, String cep, String rua,
-        String numero, String complemento, String bairro, String estado,
+        @NotBlank String firstName, String lastName, String phone, String city, String cpf,
+        String gender, LocalDate dateOfBirth, String zipCode, String street,
+        String number, String complement, String neighborhood, String state,
         @NotBlank String email, String password, RoleName role, Status status) {
 }
