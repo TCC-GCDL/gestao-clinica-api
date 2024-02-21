@@ -18,5 +18,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     boolean existsByCpf(String cpf);
 
-    List<User> findByStatusNot(Status status);
 }

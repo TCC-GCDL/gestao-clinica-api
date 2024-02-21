@@ -24,6 +24,7 @@ public class RestExceptionHandler {
         return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }
 
+
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ApiError> entityNotFoundException(RuntimeException ex) {
 
@@ -77,4 +78,19 @@ public class RestExceptionHandler {
                 .build();
         return new ResponseEntity<>(apiError, HttpStatus.CONFLICT);
     }
+
+    @ExceptionHandler(RenachExistsException.class)
+    public ResponseEntity<ApiError> renachExistsException(RuntimeException ex) {
+        ApiError apiError = ApiError
+                .builder()
+                .timestamp(LocalDateTime.now())
+                .code(HttpStatus.CONFLICT.value())
+                .status(HttpStatus.CONFLICT.name())
+                .userMessage("Renach já existe no sistema")
+                .errors(List.of(ex.getMessage()))
+                .build();
+        return new ResponseEntity<>(apiError, HttpStatus.CONFLICT);
+    }
+
+
 }
