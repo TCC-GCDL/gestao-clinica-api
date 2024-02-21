@@ -1,6 +1,6 @@
 package com.tcc.gestaoclinica.domain.models;
 
-public enum CategoriaCNH {
+public enum CategoryCNH {
     A,
     B,
     C,

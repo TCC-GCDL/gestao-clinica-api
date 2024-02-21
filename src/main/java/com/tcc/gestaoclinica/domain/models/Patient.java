@@ -9,11 +9,11 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @Builder
-public class Paciente extends Pessoa {
+public class Patient extends People {
 
     private String renach;
     private String email;
-    private CategoriaCNH categoriaCNH;
-    private EstadoCivil estadoCivil;
+    private CategoryCNH categoryCNH;
+    private MaritalStatus maritalStatus;
 
 }

@@ -1,6 +1,6 @@
 package com.tcc.gestaoclinica.core.security;
 
-import com.tcc.gestaoclinica.domain.models.Usuario;
+import com.tcc.gestaoclinica.domain.models.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,10 +12,10 @@ import java.util.stream.Collectors;
 @Getter
 public class UserDetailsImpl implements UserDetails {
 
-    private Usuario usuario;
+    private User user;
 
-    public UserDetailsImpl(Usuario usuario) {
-        this.usuario = usuario;
+    public UserDetailsImpl(User user) {
+        this.user = user;
     }
 
     /*
@@ -28,7 +28,7 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        return usuario.getRoles()
+        return user.getRoles()
                 .stream()
                 .map(role -> new SimpleGrantedAuthority(role.getNome().name()))
                 .collect(Collectors.toList());
@@ -36,12 +36,12 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getPassword() {
-        return usuario.getPassword();
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return usuario.getEmail();
+        return user.getEmail();
     }
 
     @Override

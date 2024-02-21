@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Pessoa {
+public class People {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,7 +21,7 @@ public class Pessoa {
     private String cpf;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="endereco_id")
-    private Endereco endereco;
+    private Address address;
     private String genero;
     private LocalDate dataDeNascimento;
 }

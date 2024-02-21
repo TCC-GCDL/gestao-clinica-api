@@ -1,7 +1,7 @@
 package com.tcc.gestaoclinica.core.security;
 
-import com.tcc.gestaoclinica.domain.models.Usuario;
-import com.tcc.gestaoclinica.domain.repositories.UsuarioRepository;
+import com.tcc.gestaoclinica.domain.models.User;
+import com.tcc.gestaoclinica.domain.repositories.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +23,7 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
     private JwtTokenService jwtTokenService;
 
     @Autowired
-    private UsuarioRepository userRepository;
+    private UserRepository userRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -33,8 +33,8 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
             String token = recoveryToken(request); // Recupera o token do cabeçalho Authorization da requisição
             if (token != null) {
                 String subject = jwtTokenService.getSubjectFromToken(token); // Obtém o assunto (neste caso, o nome de usuário) do token
-                Usuario usuario = userRepository.findByEmail(subject).get(); // Busca o usuário pelo email (que é o assunto do token)
-                UserDetailsImpl userDetails = new UserDetailsImpl(usuario); // Cria um UserDetails com o usuário encontrado
+                User user = userRepository.findByEmail(subject).get(); // Busca o usuário pelo email (que é o assunto do token)
+                UserDetailsImpl userDetails = new UserDetailsImpl(user); // Cria um UserDetails com o usuário encontrado
 
                 // Cria um objeto de autenticação do Spring Security
                 Authentication authentication =

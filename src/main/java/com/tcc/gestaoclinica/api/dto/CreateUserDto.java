@@ -1,6 +1,5 @@
 package com.tcc.gestaoclinica.api.dto;
 
-import com.tcc.gestaoclinica.domain.models.Endereco;
 import com.tcc.gestaoclinica.domain.models.RoleName;
 import com.tcc.gestaoclinica.domain.models.Status;
 import jakarta.validation.constraints.NotBlank;

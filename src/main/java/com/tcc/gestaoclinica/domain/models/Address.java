@@ -13,7 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @Builder
-public class Endereco {
+public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

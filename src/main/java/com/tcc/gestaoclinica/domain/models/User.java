@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Builder
-public class Usuario extends Pessoa {
+public class User extends People {
 
     private String email;
 

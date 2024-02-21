@@ -1,9 +1,7 @@
 package com.tcc.gestaoclinica.api.dto;
 
-import com.tcc.gestaoclinica.domain.models.CategoriaCNH;
-import com.tcc.gestaoclinica.domain.models.EstadoCivil;
-import com.tcc.gestaoclinica.domain.models.RoleName;
-import com.tcc.gestaoclinica.domain.models.Status;
+import com.tcc.gestaoclinica.domain.models.CategoryCNH;
+import com.tcc.gestaoclinica.domain.models.MaritalStatus;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -59,10 +57,10 @@ public class PacienteDto {
     private String renach;
 
     @NotBlank
-    private CategoriaCNH categoriaCNH;
+    private CategoryCNH categoryCNH;
 
     @NotBlank
-    private EstadoCivil estadoCivil;
+    private MaritalStatus maritalStatus;
 
 
 

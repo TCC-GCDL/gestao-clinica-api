@@ -3,37 +3,33 @@ package com.tcc.gestaoclinica.api.controller;
 import com.tcc.gestaoclinica.api.dto.CreateUserDto;
 import com.tcc.gestaoclinica.api.dto.LoginUserDto;
 import com.tcc.gestaoclinica.api.dto.RecoveryJwtTokenDto;
-import com.tcc.gestaoclinica.api.dto.UserDto;
-import com.tcc.gestaoclinica.domain.models.Usuario;
-import com.tcc.gestaoclinica.domain.repositories.UsuarioRepository;
-import com.tcc.gestaoclinica.domain.services.UsuarioService;
+import com.tcc.gestaoclinica.domain.repositories.UserRepository;
+import com.tcc.gestaoclinica.domain.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
     @Autowired
-    private UsuarioService usuarioService;
+    private UserService userService;
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UserRepository userRepository;
 
     @PostMapping("/login")
     public ResponseEntity<RecoveryJwtTokenDto> authenticateUser(@RequestBody LoginUserDto loginUserDto) {
-        RecoveryJwtTokenDto token = usuarioService.authenticateUser(loginUserDto);
+        RecoveryJwtTokenDto token = userService.authenticateUser(loginUserDto);
         return new ResponseEntity<>(token, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<Void> createUser(@RequestBody @Valid CreateUserDto createUserDto) {
-        usuarioService.createUser(createUserDto);
+        userService.createUser(createUserDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

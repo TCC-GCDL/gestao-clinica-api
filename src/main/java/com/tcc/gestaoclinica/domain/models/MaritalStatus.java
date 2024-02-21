@@ -1,6 +1,6 @@
 package com.tcc.gestaoclinica.domain.models;
 
-public enum EstadoCivil {
+public enum MaritalStatus {
     SOLTEIRO,
     CASADO,
     SEPARADO,
