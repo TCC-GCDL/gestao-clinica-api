@@ -22,7 +22,9 @@ public class SecurityConfiguration {
     public static final String [] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED = {
             "/auth/login", //url que usaremos para fazer login
             "/auth", //url que usaremos para criar um usuário
-            "/patient"
+
+
+
     };
 
     // Endpoints que requerem autenticação para serem acessados
@@ -31,6 +33,8 @@ public class SecurityConfiguration {
             "/users/**",
             "/users/**/inactivate",
             "/users/**/activate",
+            "/patient/**",
+            "/patient",
     };
 
     // Endpoints que só podem ser acessador por usuários com permissão de cliente
