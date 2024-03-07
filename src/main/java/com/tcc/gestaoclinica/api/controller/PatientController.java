@@ -34,9 +34,15 @@ public class PatientController {
 
     @GetMapping
     public ResponseEntity<Page<PatientResponse>> getAll(@RequestParam(defaultValue = "0") int page,
-                                                        @RequestParam(defaultValue = "10") int size) {
+                                                        @RequestParam(defaultValue = "10") int size,
+                                                        @RequestParam(required = false) String name) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Patient> patients = patientRepository.findAll(pageable);
+        Page<Patient> patients;
+        if (name != null && !name.isEmpty()) {
+            patients = patientRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(name, name, pageable);
+        } else {
+            patients = patientRepository.findAll(pageable);
+        }
         Page<PatientResponse> responses = patients.map(this::patientToResponse);
 
         return ResponseEntity.ok(responses);
