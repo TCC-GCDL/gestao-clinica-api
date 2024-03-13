@@ -1,11 +1,16 @@
 package com.tcc.gestaoclinica.api.controller;
 
 import com.tcc.gestaoclinica.api.dto.request.CreateUserDto;
+import com.tcc.gestaoclinica.api.dto.response.PatientResponse;
 import com.tcc.gestaoclinica.api.dto.response.UserDto;
+import com.tcc.gestaoclinica.domain.models.Patient;
 import com.tcc.gestaoclinica.domain.models.User;
 import com.tcc.gestaoclinica.domain.repositories.UserRepository;
 import com.tcc.gestaoclinica.domain.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,13 +29,36 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping
-    public List<UserDto> getUsers() {
-        List<User> users = userRepository.findAll();
-        if (users.isEmpty()) {
-            return new ArrayList<>();
+    public ResponseEntity<Page<UserDto>> getUsers(@RequestParam(defaultValue = "0") int page,
+                                                  @RequestParam(defaultValue = "10") int size,
+                                                  @RequestParam(required = false) String name) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<User> users;
+        if (name != null && !name.isEmpty()) {
+            users = userRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(name, name, pageable);
+        } else {
+            users = userRepository.findAll(pageable);
         }
-        return users.stream().map(this::userToUserDto).toList();
+        Page<UserDto> responses = users.map(this::userToUserDto);
+
+        return ResponseEntity.ok(responses);
     }
+
+//    @GetMapping
+//    public ResponseEntity<Page<PatientResponse>> getAll(@RequestParam(defaultValue = "0") int page,
+//                                                        @RequestParam(defaultValue = "10") int size,
+//                                                        @RequestParam(required = false) String name) {
+//        Pageable pageable = PageRequest.of(page, size);
+//        Page<Patient> patients;
+//        if (name != null && !name.isEmpty()) {
+//            patients = patientRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(name, name, pageable);
+//        } else {
+//            patients = patientRepository.findAll(pageable);
+//        }
+//        Page<PatientResponse> responses = patients.map(this::patientToResponse);
+//
+//        return ResponseEntity.ok(responses);
+//    }
 
     @GetMapping("/{usuarioId}")
     public ResponseEntity<UserDto> getUsuario(@PathVariable Long usuarioId) {
