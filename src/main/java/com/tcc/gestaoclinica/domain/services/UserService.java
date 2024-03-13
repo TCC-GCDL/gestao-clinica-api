@@ -21,6 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,8 +55,10 @@ public class UserService {
         User user = userRepository.findByEmail(userDetails.getUsername()).orElseThrow();
         AuthUserDto authUser = new AuthUserDto(user.getId(), user.getEmail(), user.getFirstName());
 
+        Instant expirationDate = jwtTokenService.expirationDate();
+
         // Gera um token JWT para o usuário autenticado
-        return new RecoveryJwtTokenDto(authUser, jwtTokenService.generateToken(userDetails));
+        return new RecoveryJwtTokenDto(authUser, jwtTokenService.generateToken(userDetails), expirationDate);
     }
 
     public void createUser(CreateUserDto createUserDto) {

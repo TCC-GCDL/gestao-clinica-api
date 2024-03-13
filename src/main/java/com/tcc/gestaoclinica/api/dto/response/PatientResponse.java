@@ -1,6 +1,7 @@
 package com.tcc.gestaoclinica.api.dto.response;
 
 import com.tcc.gestaoclinica.domain.models.CategoryCNH;
+import com.tcc.gestaoclinica.domain.models.Gender;
 import com.tcc.gestaoclinica.domain.models.MaritalStatus;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -29,7 +30,7 @@ public class PatientResponse {
     private String cpf;
 
     @NotBlank
-    private String gender;
+    private Gender gender;
 
     private LocalDate dateOfBirth;
 
@@ -62,6 +63,8 @@ public class PatientResponse {
     @NotBlank
     private MaritalStatus maritalStatus;
 
+    @NotBlank
+    private String rg;
 
 
 }

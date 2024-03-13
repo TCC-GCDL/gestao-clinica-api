@@ -22,6 +22,6 @@ public class People {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="address_id")
     private Address address;
-    private String gender;
+    private Gender gender;
     private LocalDate dateOfBirth;
 }

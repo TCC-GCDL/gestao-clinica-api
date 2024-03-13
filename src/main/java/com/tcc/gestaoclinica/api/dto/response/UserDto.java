@@ -1,5 +1,6 @@
 package com.tcc.gestaoclinica.api.dto.response;
 
+import com.tcc.gestaoclinica.domain.models.Gender;
 import com.tcc.gestaoclinica.domain.models.RoleName;
 import com.tcc.gestaoclinica.domain.models.Status;
 import jakarta.validation.constraints.NotBlank;
@@ -29,7 +30,7 @@ public class UserDto {
     private String cpf;
 
     @NotBlank
-    private String gender;
+    private Gender gender;
 
     private LocalDate dateOfBirth;
 

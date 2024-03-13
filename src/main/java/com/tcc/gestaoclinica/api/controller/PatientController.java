@@ -48,6 +48,13 @@ public class PatientController {
         return ResponseEntity.ok(responses);
     }
 
+    @GetMapping("/{patientId}")
+    public PatientResponse getPatient(@PathVariable Long patientId) {
+        Patient patient = patientService.searchOrFail(patientId);
+
+        return patientToResponse(patient);
+    }
+
     @PostMapping
     public PatientResponse createPatient(@RequestBody PatientRequest patientRequest) {
 
@@ -81,6 +88,7 @@ public class PatientController {
         patient.setDateOfBirth(patientRequest.getDateOfBirth());
         patient.setGender(patientRequest.getGender());
         patient.setPhone(patientRequest.getPhone());
+
 
         Address address = new Address();
         address.setNumber(patientRequest.getNumber());
@@ -118,6 +126,7 @@ public class PatientController {
         response.setRenach(patient.getRenach());
         response.setCategoryCNH(patient.getCategoryCNH());
         response.setMaritalStatus(patient.getMaritalStatus());
+        response.setRg(patient.getRg());
 
         return response;
     }
@@ -134,6 +143,7 @@ public class PatientController {
         patient.setDateOfBirth(patientRequest.getDateOfBirth());
         patient.setGender(patientRequest.getGender());
         patient.setPhone(patientRequest.getPhone());
+        patient.setRg(patientRequest.getRg());
 
         Address address = patient.getAddress();
         address.setNumber(patientRequest.getNumber());
@@ -143,6 +153,7 @@ public class PatientController {
         address.setNeighborhood(patientRequest.getNeighborhood());
         address.setCity(patientRequest.getCity());
         address.setZipCode(patientRequest.getZipCode());
+
 
     }
 

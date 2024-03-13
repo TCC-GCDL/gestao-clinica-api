@@ -51,7 +51,25 @@ public class JwtTokenService {
         return ZonedDateTime.now(ZoneId.of("America/Recife")).toInstant();
     }
 
-    private Instant expirationDate() {
-        return ZonedDateTime.now(ZoneId.of("America/Recife")).plusHours(4).toInstant();
+    public Instant expirationDate() {
+        return ZonedDateTime.now(ZoneId.of("America/Recife")).plusDays(1).toInstant();
+    }
+
+    public boolean isTokenExpired(String token) {
+        try {
+            // Define o algoritmo HMAC SHA256 para verificar a assinatura do token passando a chave secreta definida
+            Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
+            Instant expiration = JWT.require(algorithm)
+                    .withIssuer(ISSUER) // Define o emissor do token
+                    .build()
+                    .verify(token) // Verifica a validade do token
+                    .getExpiresAt().toInstant(); // Obtém a data de expiração do token
+
+            // Retorna true se a data de expiração for anterior ao momento atual
+            return expiration.isBefore(Instant.now());
+        } catch (JWTVerificationException exception){
+            // Em caso de exceção, o token é inválido ou expirado
+            return true;
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.tcc.gestaoclinica.api.dto.request;
 
 import com.tcc.gestaoclinica.domain.models.CategoryCNH;
+import com.tcc.gestaoclinica.domain.models.Gender;
 import com.tcc.gestaoclinica.domain.models.MaritalStatus;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -17,7 +18,7 @@ public class PatientRequest {
     private String phone;
     private String city;
     private String cpf;
-    private String gender;
+    private Gender gender;
     private LocalDate dateOfBirth;
     private String zipCode;
     private String street;
