@@ -57,6 +57,5 @@ public class UserDto {
     private RoleName role;
 
     private Status status;
-
-    private String password;
+    ;
 }

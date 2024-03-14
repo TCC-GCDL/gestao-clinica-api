@@ -44,22 +44,6 @@ public class UserController {
         return ResponseEntity.ok(responses);
     }
 
-//    @GetMapping
-//    public ResponseEntity<Page<PatientResponse>> getAll(@RequestParam(defaultValue = "0") int page,
-//                                                        @RequestParam(defaultValue = "10") int size,
-//                                                        @RequestParam(required = false) String name) {
-//        Pageable pageable = PageRequest.of(page, size);
-//        Page<Patient> patients;
-//        if (name != null && !name.isEmpty()) {
-//            patients = patientRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(name, name, pageable);
-//        } else {
-//            patients = patientRepository.findAll(pageable);
-//        }
-//        Page<PatientResponse> responses = patients.map(this::patientToResponse);
-//
-//        return ResponseEntity.ok(responses);
-//    }
-
     @GetMapping("/{usuarioId}")
     public ResponseEntity<UserDto> getUsuario(@PathVariable Long usuarioId) {
         User user = userService.buscarOuFalhar(usuarioId);
@@ -110,7 +94,7 @@ public class UserController {
 
         userDto.setRole(user.getRoles().stream().toList().get(0).getName());
         userDto.setStatus(user.getStatus());
-        userDto.setPassword(user.getPassword());
+
 
         return userDto;
     }
