@@ -39,6 +39,8 @@ public class SecurityConfiguration {
             "/patient",
             "/doctors/**",
             "/doctors",
+            "/group-medical-care",
+            "/group-medical-care/**",
     };
 
     // Endpoints que só podem ser acessador por usuários com permissão de cliente

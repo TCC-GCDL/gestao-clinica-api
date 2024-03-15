@@ -19,6 +19,7 @@ public class People {
     private String lastName;
     private String phone;
     private String cpf;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="address_id")
     private Address address;
