@@ -1,19 +1,24 @@
 package com.tcc.gestaoclinica.api.controller;
 
 import com.tcc.gestaoclinica.api.dto.request.GroupMedicalCareRequest;
-import com.tcc.gestaoclinica.api.dto.response.DoctorGroupResponse;
-import com.tcc.gestaoclinica.api.dto.response.GroupMedicalCareResponse;
-import com.tcc.gestaoclinica.api.dto.response.UserGroupResponse;
+import com.tcc.gestaoclinica.api.dto.response.*;
 import com.tcc.gestaoclinica.domain.models.Doctor;
 import com.tcc.gestaoclinica.domain.models.GroupMedicalCare;
+import com.tcc.gestaoclinica.domain.models.Patient;
 import com.tcc.gestaoclinica.domain.models.User;
 import com.tcc.gestaoclinica.domain.repositories.GroupMedialCareRepository;
 import com.tcc.gestaoclinica.domain.services.DoctorService;
 import com.tcc.gestaoclinica.domain.services.GroupMedicalCareService;
 import com.tcc.gestaoclinica.domain.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -39,6 +44,28 @@ public class GroupMedicalCareController {
         return toResponse(groupMedicalCare);
     }
 
+    @GetMapping
+    public ResponseEntity<Page<GroupMedicalCareResponse>> getALl(@RequestParam(defaultValue = "0") int page,
+                                                 @RequestParam(defaultValue = "10") int size,
+                                                 @RequestParam(required = false) String name) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<GroupMedicalCare> gmc;
+        if (name != null && !name.isEmpty()) {
+            gmc = groupMedialCareRepository.findByNameContainingIgnoreCase(name, pageable);
+        } else {
+            gmc = groupMedialCareRepository.findAll(pageable);
+        }
+        Page<GroupMedicalCareResponse> responses = gmc.map(this::toResponse);
+
+        return ResponseEntity.ok(responses);
+    }
+
+    @PostMapping("/{groupMedicalCareId}/add-patient/{patientId}")
+    public void addPatientToGroupMedicalCare(@PathVariable Long groupMedicalCareId, @PathVariable Long patientId) {
+        groupMedicalCareService.addPatientToGroupMedicalCare(groupMedicalCareId, patientId);
+    }
+
     @PostMapping
     public void createGroupMedicalCare(@RequestBody GroupMedicalCareRequest groupMedicalCareRequest) {
         GroupMedicalCare groupMedicalCare = new GroupMedicalCare();
@@ -60,16 +87,29 @@ public class GroupMedicalCareController {
     public GroupMedicalCareResponse toResponse(GroupMedicalCare groupMedicalCare) {
         GroupMedicalCareResponse groupMedicalCareResponse = new GroupMedicalCareResponse();
         groupMedicalCareResponse.setId(groupMedicalCare.getId());
-        groupMedicalCareResponse.setName(groupMedicalCare.getName());
+        var nameGroup = groupMedicalCare.getDate().toString();
+        groupMedicalCareResponse.setName("Turma " + converterFormatoData(nameGroup));
         groupMedicalCareResponse.setDate(groupMedicalCare.getDate().toString());
 
         UserGroupResponse userGroupResponse = new UserGroupResponse();
         userGroupResponse.setId(groupMedicalCare.getUser().getId());
-        String name = groupMedicalCare.getUser().getFirstName() + " " + groupMedicalCare.getUser().getLastName();
-        userGroupResponse.setName(name);
+        String nameUser = groupMedicalCare.getUser().getFirstName() + " " + groupMedicalCare.getUser().getLastName();
+        userGroupResponse.setName(nameUser);
 
         groupMedicalCareResponse.setUser(userGroupResponse);
-        groupMedicalCareResponse.setPatients(null);
+
+
+        var patients = groupMedicalCare.getPatients().stream().map(patient -> {
+            PatientGroupResponse patientResponse = new PatientGroupResponse();
+            patientResponse.setId(patient.getId());
+            patientResponse.setName(patient.getFirstName() + " " + patient.getLastName());
+            patientResponse.setEmail(patient.getEmail());
+            patientResponse.setPhone(patient.getPhone());
+
+            return patientResponse;
+        });
+
+        groupMedicalCareResponse.setPatients(patients.toList());
 
         List<Doctor> doctors = groupMedicalCare.getDoctors();
 
@@ -83,6 +123,12 @@ public class GroupMedicalCareController {
         groupMedicalCareResponse.setDoctors(doctorsResponse.toList());
 
         return groupMedicalCareResponse;
+    }
+
+    public static String converterFormatoData(String dataHoraString) {
+        LocalDateTime dataHora = LocalDateTime.parse(dataHoraString);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
+        return dataHora.format(formatter);
     }
 
 

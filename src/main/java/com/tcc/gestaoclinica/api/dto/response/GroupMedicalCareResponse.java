@@ -12,6 +12,6 @@ public class GroupMedicalCareResponse {
     private String date;
     private UserGroupResponse user;
     private List<DoctorGroupResponse> doctors;
-    private List<PatientResponse> patients;
+    private List<PatientGroupResponse> patients;
 
 }
