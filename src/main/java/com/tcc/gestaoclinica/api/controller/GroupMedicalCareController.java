@@ -66,6 +66,11 @@ public class GroupMedicalCareController {
         groupMedicalCareService.addPatientToGroupMedicalCare(groupMedicalCareId, patientId);
     }
 
+    @DeleteMapping("/{groupMedicalCareId}/remove-patient/{patientId}")
+    public void removePatientFromGroupMedicalCare(@PathVariable Long groupMedicalCareId, @PathVariable Long patientId) {
+        groupMedicalCareService.removePatientFromGroupMedicalCare(groupMedicalCareId, patientId);
+    }
+
     @PostMapping
     public void createGroupMedicalCare(@RequestBody GroupMedicalCareRequest groupMedicalCareRequest) {
         GroupMedicalCare groupMedicalCare = new GroupMedicalCare();

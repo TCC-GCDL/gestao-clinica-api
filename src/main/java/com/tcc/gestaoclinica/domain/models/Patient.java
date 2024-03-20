@@ -17,4 +17,5 @@ public class Patient extends People {
     private MaritalStatus maritalStatus;
     private String rg;
 
+
 }

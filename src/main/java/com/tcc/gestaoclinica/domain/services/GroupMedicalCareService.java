@@ -35,6 +35,16 @@ public class GroupMedicalCareService {
         groupMedicalCareRepository.save(groupMedicalCare);
     }
 
+    public void removePatientFromGroupMedicalCare(Long groupMedicalCareId, Long patientId) {
+        GroupMedicalCare groupMedicalCare = searchOrFail(groupMedicalCareId);
+        Patient patient = patientService.searchOrFail(patientId);
+        if (!groupMedicalCare.getPatients().contains(patient)) {
+            throw new EntityNotFoundException("Paciente não cadastrado no grupo de atendimento médico");
+        }
+        groupMedicalCare.getPatients().remove(patient);
+        groupMedicalCareRepository.save(groupMedicalCare);
+    }
+
     public GroupMedicalCare searchOrFail(Long id) {
         return groupMedicalCareRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Grupo de atendimento médico não encontrado"));
     }
