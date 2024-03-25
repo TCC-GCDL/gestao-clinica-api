@@ -74,12 +74,12 @@ public class GroupMedicalCareController {
     @PostMapping
     public void createGroupMedicalCare(@RequestBody GroupMedicalCareRequest groupMedicalCareRequest) {
         GroupMedicalCare groupMedicalCare = new GroupMedicalCare();
-
-        groupMedicalCare.setName(groupMedicalCareRequest.getName());
+        var nameGroup = groupMedicalCareRequest.getDate().toString();
+        groupMedicalCare.setName("Turma " + converterFormatoData(nameGroup));
         groupMedicalCare.setDate(groupMedicalCareRequest.getDate());
 
         Doctor doctor = doctorService.searchOrFail(groupMedicalCareRequest.getDoctorId());
-        groupMedicalCare.getDoctors().add(doctor);
+        groupMedicalCare.setDoctor(doctor);
 
         User user = userService.buscarOuFalhar(groupMedicalCareRequest.getUserId());
         groupMedicalCare.setUser(user);
@@ -92,8 +92,7 @@ public class GroupMedicalCareController {
     public GroupMedicalCareResponse toResponse(GroupMedicalCare groupMedicalCare) {
         GroupMedicalCareResponse groupMedicalCareResponse = new GroupMedicalCareResponse();
         groupMedicalCareResponse.setId(groupMedicalCare.getId());
-        var nameGroup = groupMedicalCare.getDate().toString();
-        groupMedicalCareResponse.setName("Turma " + converterFormatoData(nameGroup));
+        groupMedicalCareResponse.setName(groupMedicalCare.getName());
         groupMedicalCareResponse.setDate(groupMedicalCare.getDate().toString());
 
         UserGroupResponse userGroupResponse = new UserGroupResponse();
@@ -116,16 +115,11 @@ public class GroupMedicalCareController {
 
         groupMedicalCareResponse.setPatients(patients.toList());
 
-        List<Doctor> doctors = groupMedicalCare.getDoctors();
 
-        var doctorsResponse = doctors.stream().map(doctor -> {
-            DoctorGroupResponse doctorGroupResponse = new DoctorGroupResponse();
-            doctorGroupResponse.setId(doctor.getId());
-            doctorGroupResponse.setName(doctor.getFirstName() + " " + doctor.getLastName());
-            return doctorGroupResponse;
-        });
-
-        groupMedicalCareResponse.setDoctors(doctorsResponse.toList());
+        DoctorGroupResponse doctorGroupResponse = new DoctorGroupResponse();
+        doctorGroupResponse.setId(groupMedicalCare.getDoctor().getId());
+        doctorGroupResponse.setName(groupMedicalCare.getDoctor().getFirstName() + " " + groupMedicalCare.getDoctor().getLastName());
+        groupMedicalCareResponse.setDoctor(doctorGroupResponse);
 
         return groupMedicalCareResponse;
     }
@@ -135,7 +129,6 @@ public class GroupMedicalCareController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
         return dataHora.format(formatter);
     }
-
 
 }
 

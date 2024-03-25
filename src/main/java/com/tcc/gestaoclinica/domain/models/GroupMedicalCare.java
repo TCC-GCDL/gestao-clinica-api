@@ -24,18 +24,13 @@ public class GroupMedicalCare  {
             inverseJoinColumns = @JoinColumn(name = "patient_id"))
     private List<Patient> patients = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "group_medical_care_doctors",
-            joinColumns = @JoinColumn(name = "group_medical_care_id"),
-            inverseJoinColumns = @JoinColumn(name = "doctor_id"))
-    private List<Doctor> doctors = new ArrayList<>();
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="doctor_id")
+    private Doctor doctor;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="user_id")
     private User user;
 
     private LocalDateTime date;
-
-
-
 }

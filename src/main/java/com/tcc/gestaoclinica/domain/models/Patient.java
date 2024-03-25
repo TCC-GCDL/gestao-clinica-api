@@ -16,6 +16,4 @@ public class Patient extends People {
     private CategoryCNH categoryCNH;
     private MaritalStatus maritalStatus;
     private String rg;
-
-
 }

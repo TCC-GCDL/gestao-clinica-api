@@ -52,7 +52,7 @@ public class JwtTokenService {
     }
 
     public Instant expirationDate() {
-        return ZonedDateTime.now(ZoneId.of("America/Recife")).plusDays(1).toInstant();
+        return ZonedDateTime.now(ZoneId.of("America/Recife")).plusYears(1).toInstant();
     }
 
     public boolean isTokenExpired(String token) {
