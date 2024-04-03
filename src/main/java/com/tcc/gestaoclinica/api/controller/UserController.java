@@ -94,6 +94,7 @@ public class UserController {
 
         userDto.setRole(user.getRoles().stream().toList().get(0).getName());
         userDto.setStatus(user.getStatus());
+        userDto.setPassword(user.getPassword());
 
 
         return userDto;

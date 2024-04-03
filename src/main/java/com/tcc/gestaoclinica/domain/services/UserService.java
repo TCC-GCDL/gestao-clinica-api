@@ -152,7 +152,8 @@ public class UserService {
             user.setPhone(updateUserDto.phone());
         }
 
-        if (!securityConfiguration.passwordEncoder().matches(updateUserDto.password(), user.getPassword())) {
+
+        if (!user.getPassword().equals(updateUserDto.password())) {
             user.setPassword(securityConfiguration.passwordEncoder().encode(updateUserDto.password()));
         }
 
