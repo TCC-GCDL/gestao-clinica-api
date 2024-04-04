@@ -4,7 +4,9 @@ import com.tcc.gestaoclinica.api.dto.request.GroupMedicalCareRequest;
 import com.tcc.gestaoclinica.api.dto.response.*;
 import com.tcc.gestaoclinica.domain.models.Doctor;
 import com.tcc.gestaoclinica.domain.models.GroupMedicalCare;
-import com.tcc.gestaoclinica.domain.models.Patient;
+
+import java.time.*;
+import java.time.temporal.ChronoUnit;
 import com.tcc.gestaoclinica.domain.models.User;
 import com.tcc.gestaoclinica.domain.repositories.GroupMedialCareRepository;
 import com.tcc.gestaoclinica.domain.services.DoctorService;
@@ -17,7 +19,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -61,6 +62,20 @@ public class GroupMedicalCareController {
         return ResponseEntity.ok(responses);
     }
 
+    @GetMapping("/today")
+    public ResponseEntity<List<GroupMedicalCareResponse>> getToday() {
+
+        LocalDate todayDate = LocalDate.now();
+
+        LocalDate startDate = todayDate.atStartOfDay().toLocalDate();
+        LocalDate endDate = todayDate.atTime(LocalTime.MAX).toLocalDate();
+
+        List<GroupMedicalCare> gmc = groupMedialCareRepository.findByDateBetween(startDate, endDate);
+        List<GroupMedicalCareResponse> responses = gmc.stream().map(this::toResponse).toList();
+
+        return ResponseEntity.ok(responses);
+    }
+
     @PostMapping("/{groupMedicalCareId}/add-patient/{patientId}")
     public void addPatientToGroupMedicalCare(@PathVariable Long groupMedicalCareId, @PathVariable Long patientId) {
         groupMedicalCareService.addPatientToGroupMedicalCare(groupMedicalCareId, patientId);
@@ -85,6 +100,7 @@ public class GroupMedicalCareController {
         groupMedicalCare.setUser(user);
 
         groupMedicalCare.setDate(groupMedicalCareRequest.getDate());
+        groupMedicalCare.setShift(groupMedicalCareRequest.getShift());
 
         groupMedicalCareService.save(groupMedicalCare);
     }
@@ -94,6 +110,7 @@ public class GroupMedicalCareController {
         groupMedicalCareResponse.setId(groupMedicalCare.getId());
         groupMedicalCareResponse.setName(groupMedicalCare.getName());
         groupMedicalCareResponse.setDate(groupMedicalCare.getDate().toString());
+        groupMedicalCareResponse.setShift(groupMedicalCare.getShift());
 
         UserGroupResponse userGroupResponse = new UserGroupResponse();
         userGroupResponse.setId(groupMedicalCare.getUser().getId());
@@ -124,10 +141,10 @@ public class GroupMedicalCareController {
         return groupMedicalCareResponse;
     }
 
-    public static String converterFormatoData(String dataHoraString) {
-        LocalDateTime dataHora = LocalDateTime.parse(dataHoraString);
+    public static String converterFormatoData(String dataString) {
+        LocalDate data = LocalDate.parse(dataString);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
-        return dataHora.format(formatter);
+        return data.format(formatter);
     }
 
 }

@@ -3,6 +3,7 @@ package com.tcc.gestaoclinica.domain.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,5 +33,7 @@ public class GroupMedicalCare  {
     @JoinColumn(name="user_id")
     private User user;
 
-    private LocalDateTime date;
+    private Shift shift;
+
+    private LocalDate date;
 }
